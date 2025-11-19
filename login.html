@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vialowspender</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <style>
+        /* CSS yang sama persis seperti sebelumnya */
+        :root {
+            --pink-main: #F08080;
+            --border-white: rgba(255, 255, 255, 0.8);
+            --background-glass: rgba(255, 255, 255, 0.3);
+            --bg-gradient: linear-gradient(135deg, #FFC0CB 0%, #FADADD 50%, #FFB6C1 100%); 
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: var(--bg-gradient);
+            background-size: cover;
+        }
+        .login-container {
+            background: var(--background-glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-white);
+            border-radius: 5px; 
+            padding: 70px 40px 40px; 
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+            width: 380px;
+            text-align: center;
+            position: relative;
+            outline: 1px solid var(--border-white);
+            outline-offset: -20px; 
+        }
+        .user-icon-circle {
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 100px;
+            background-color: var(--pink-main);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid var(--border-white);
+        }
+        .user-icon-circle i {
+            font-size: 40px;
+            color: white; 
+        }
+        .login-form {
+            margin-top: 20px;
+        }
+        .input-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            background-color: white;
+            border-radius: 0; 
+            padding: 0 15px;
+            height: 50px;
+            box-shadow: none;
+            border: none;
+        }
+        .input-group input {
+            border: none;
+            outline: none;
+            flex-grow: 1;
+            padding: 0 10px;
+            height: 100%;
+            background: transparent;
+            color: #333;
+            font-size: 16px;
+        }
+        .icon-prefix {
+            color: #444;
+            font-size: 18px;
+        }
+        .login-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            font-size: 14px;
+            color: #444;
+            padding: 0 5px;
+        }
+        .login-options label {
+            display: flex;
+            align-items: center;
+        }
+        .login-options input[type="checkbox"] {
+            margin-right: 8px;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border: 1px solid #444;
+            background-color: transparent;
+            position: relative;
+            cursor: pointer;
+        }
+        .login-options input[type="checkbox"]:checked {
+            background-color: #444; 
+            border-color: #444;
+        }
+        .login-options input[type="checkbox"]:checked::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 10px;
+        }
+        .forgot-password {
+            color: var(--pink-main);
+            text-decoration: none;
+            font-size: 14px;
+            opacity: 0.7; 
+        }
+        .login-button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 0; 
+            background-color: var(--pink-main); 
+            color: white;
+            font-size: 16px;
+            font-weight: normal;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .login-button:hover {
+            background-color: #d17070;
+        }
+        /* Style untuk pesan error */
+        #error-message {
+            color: red;
+            margin-top: -15px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-container">
+    <div class="user-icon-circle">
+        <i class="fas fa-user-friends"></i> 
+    </div>
+
+    <!-- Tambahkan id pada form dan input untuk JavaScript -->
+    <form id="loginForm" class="login-form">
+        <div class="input-group">
+            <i class="fas fa-user icon-prefix"></i>
+            <input type="text" id="username" placeholder="Username">
+        </div>
+
+        <div class="input-group">
+            <i class="fas fa-lock icon-prefix"></i>
+            <input type="password" id="password" placeholder="Password">
+        </div>
+        
+        <!-- Pesan error (default tersembunyi) -->
+        <div id="error-message" style="display:none;">Username atau Password salah!</div>
+
+        <div class="login-options">
+            <label>
+                <input type="checkbox" checked>
+                Remember me
+            </label>
+            <a href="#" class="forgot-password">Forgot Password?</a>
+        </div>
+
+        <button type="submit" class="login-button">LOGIN</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Mencegah form submit default
+
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const errorMessage = document.getElementById('error-message');
+
+        // Logika verifikasi
+        if (username === 'admin' && password === '123') {
+            // Berhasil login, arahkan ke dashboard
+            window.location.href = 'dashboard.html';
+        } else {
+            // Gagal login, tampilkan pesan error
+            errorMessage.style.display = 'block';
+        }
+    });
+</script>
+
+</body>
+</html>
